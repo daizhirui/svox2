@@ -15,7 +15,7 @@ Despite the name, it's not strictly intended to be a successor of svox
 Citation:
 ```
 @inproceedings{yu2022plenoxels,
-      title={Plenoxels: Radiance Fields without Neural Networks}, 
+      title={Plenoxels: Radiance Fields without Neural Networks},
       author={Sara Fridovich-Keil and Alex Yu and Matthew Tancik and Qinhong Chen and Benjamin Recht and Angjoo Kanazawa},
       year={2022},
       booktitle={CVPR},
@@ -24,7 +24,7 @@ Citation:
 Note that the joint first-authors decided to swap the order of names between arXiv and CVPR proceedings.
 
 This contains the official optimization code.
-A JAX implementation is also available at <https://github.com/sarafridov/plenoxels>. However, note that the JAX version is currently feature-limited, running in about 1 hour per epoch and only supporting bounded scenes (at present). 
+A JAX implementation is also available at <https://github.com/sarafridov/plenoxels>. However, note that the JAX version is currently feature-limited, running in about 1 hour per epoch and only supporting bounded scenes (at present).
 
 ![Fast optimization](https://raw.githubusercontent.com/sxyu/svox2/master/github_img/fastopt.gif)
 
@@ -55,6 +55,12 @@ Then clone the repo and install the library at the root (svox2), which includes 
 `conda install -c bottler nvidiacub`.
 Since CUDA 11, CUB is shipped with the toolkit and installing this may lead to build errors.
 
+**With conda environment activated, CUB may not be detected properly. In this case, you can try**
+```
+export CUDA_HOME=<cuda-installation-dir>
+export CUB_HOME=$CUDA_HOME/include/cub
+```
+
 To install the main library, simply run
 ```
 pip install -e . --verbose
@@ -67,7 +73,7 @@ We have backends for NeRF-Blender, LLFF, NSVF, and CO3D dataset formats, and the
 
 Please get the NeRF-synthetic and LLFF datasets from:
 <https://drive.google.com/drive/folders/128yBriW1IG_3NJ5Rp7APSTZsJqdJdfc1>
-(`nerf_synthetic.zip` and `nerf_llff_data.zip`). 
+(`nerf_synthetic.zip` and `nerf_llff_data.zip`).
 
 We provide a processed Tanks and temples dataset (with background) in NSVF format at:
 <https://drive.google.com/file/d/1PD4oTP4F8jTtpjd_AQjCsL4h8iYFCyvO/view?usp=sharing>
@@ -93,9 +99,14 @@ For training a single scene, see `opt/opt.py`. The launch script makes this easi
 Inside `opt/`, run
 `./launch.sh <exp_name> <GPU_id> <data_dir> -c <config>`
 
+For example, with the NeRF-synthetic data of the lego scene in `../data/nerf_synthetic/lego`, run
+```shell
+./launch.sh lego 0 ../data/nerf_synthetic/lego -c configs/syn.json
+```
+
 Where `<config>` should be `configs/syn.json` for NeRF-synthetic scenes,
 `configs/llff.json`
-for forward-facing scenes, and 
+for forward-facing scenes, and
 `configs/tnt.json` for tanks and temples scenes, for example.
 
 The dataset format will be auto-detected from `data_dir`.
@@ -153,7 +164,7 @@ First make sure you have colmap installed. Then
 (in opt/scripts)
 `bash proc_colmap.sh <img_dir> --noradial`
 
-Where `<img_dir>` should be a directory directly containing png/jpg images from a 
+Where `<img_dir>` should be a directory directly containing png/jpg images from a
 normal perspective camera.
 UPDATE: `--noradial` is recommended since otherwise, the script performs undistortion, which seems to not work well and make results blurry.
 Support for the complete OPENCV camera model which has been used by more recent projects would be welcome
