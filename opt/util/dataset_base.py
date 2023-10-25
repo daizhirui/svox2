@@ -17,7 +17,6 @@ class DatasetBase:
 
     def __init__(self):
         self.ndc_coeffs = (-1, -1)
-        self.use_sphere_bound = False
         self.should_use_background = True # a hint
         self.use_sphere_bound = True
         self.scene_center = [0.0, 0.0, 0.0]

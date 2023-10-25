@@ -360,8 +360,8 @@ class SparseGrid(nn.Module):
         basis_type: int = BASIS_TYPE_SH,
         basis_dim: int = 9,  # SH/learned basis size; in SH case, square number
         basis_reso: int = 16,  # Learned basis resolution (x^3 embedding grid)
-        use_z_order : bool=False,
-        use_sphere_bound : bool=False,
+        use_z_order : bool=False,  # TODO: what is this?
+        use_sphere_bound : bool=False,  # TODO: what is this?
         mlp_posenc_size : int = 0,
         mlp_width : int = 16,
         background_nlayers : int = 0,  # BG MSI layers
@@ -434,7 +434,7 @@ class SparseGrid(nn.Module):
 
             norms = points.norm(dim=-1)
             mask = norms <= 1.0 + (3 ** 0.5) / gsz.max()
-            self.capacity: int = mask.sum()
+            self.capacity: int = mask.sum()  # the number of voxels in the sphere
 
             data_mask = torch.zeros(n3, dtype=torch.int32, device=device)
             idxs = init_links[mask].long()

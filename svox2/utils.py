@@ -74,7 +74,7 @@ def inv_morton_code_3(code):
 def gen_morton(D, device='cpu', dtype=torch.long):
     assert is_pow2(D), "Morton code requires power of 2 reso"
     arr = torch.arange(D, device=device, dtype=dtype)
-    X, Y, Z = torch.meshgrid(arr, arr, arr)
+    X, Y, Z = torch.meshgrid(arr, arr, arr, indexing='ij')
     mort = morton_code_3(X, Y, Z)
     return mort
 
@@ -629,4 +629,3 @@ class Timing:
         self.end.record()
         torch.cuda.synchronize()
         print(self.name, "elapsed", self.start.elapsed_time(self.end), "ms")
-

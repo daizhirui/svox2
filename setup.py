@@ -33,6 +33,12 @@ if cub_home is None:
 else:
 	include_dirs.append(os.path.realpath(cub_home).replace("\\ ", " "))
 
+build_type = os.environ.get("BUILD_TYPE", "Release")
+if build_type == "Debug":
+    extra_compile_args={'cxx': ['-g'], 'nvcc': ['-O2', '-rdc=true']},
+else:
+    extra_compile_args={'cxx': ['-O3'], 'nvcc': ['-O3', '-rdc=true']},
+
 try:
     ext_modules = [
         CUDAExtension('svox2.csrc', [
@@ -45,6 +51,7 @@ try:
             'svox2/csrc/loss_kernel.cu',
             'svox2/csrc/optim_kernel.cu',
         ], include_dirs=include_dirs,
+        extra_compile_args=extra_compile_args,
         optional=False),
     ]
 except:

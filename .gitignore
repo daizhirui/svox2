@@ -4,3 +4,8 @@ __pycache__/
 *$py.class
 Session.vim
 ckpt/
+*.egg-info
+.eggs
+build
+*.cpython*.so
+.vscode

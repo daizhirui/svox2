@@ -94,7 +94,14 @@ python ingp2nsvf.py <ingp_data_dir> <output_data_dir>
 
 ## Optimization
 
-For training a single scene, see `opt/opt.py`. The launch script makes this easier.
+For training a single scene, see `opt/opt.py`.
+
+For example,
+```
+CUDA_VISIBLE_DEVICES=0 python opt.py --train_dir ckpt/lego --config configs/syn.json ../data/nerf_synthetic/lego
+```
+
+The launch script makes this easier.
 
 Inside `opt/`, run
 `./launch.sh <exp_name> <GPU_id> <data_dir> -c <config>`
@@ -231,3 +238,64 @@ You may notice that this CUDA extension takes forever to install.
 A suggestion is using ninja. On Ubuntu,
 install it with `sudo apt install ninja-build`.
 This will enable parallel compilation and significantly improve iteration speed.
+
+# Notes
+
+## To debug the C source code
+
+```shell
+git clone --recursive https://github.com/pytorch/kineto.git
+cd kineto
+cmake ../libkineto -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
+make -j`nproc`
+sudo make install
+```
+
+Compile the svox2-test executable only:
+
+```shell
+cd svox2/csrc
+mkdir build
+cd build
+cmake .. -DTorch_DIR=`dirname $(python -c "import torch; print(torch.__file__)")`/share/cmake/Torch -DCMAKE_BUILD_TYPE=Debug
+make -j`nproc`
+```
+
+However, to debug svox2, we need the Python bindings. So we need to compile the whole library:
+
+```shell
+# in repo root
+BUILD_TYPE=Debug pip install -e . --verbose
+```
+
+Then we can debug the C++/CUDA code via the Python bindings.
+
+## Parameters
+
+For NeRF Lego scene, the parameters are
+
+```
+reso = [[256, 256, 256], [512, 512, 512]]
+upsamp_every = 3 x 12800
+use_sphere_bound = True
+basis_dim = 9
+use_z_order = True
+basis_reso = 32
+basis_type = BASIS_TYPE_SH
+mlp_posenc_size = 4
+mlp_width = 32
+background_nlayers = 0
+background_reso = 512
+```
+
+## Grid ordering
+
+`use_z_order`: if true, use z-ordering for the grid. Related to the **Morton encoding**:
+
+- https://www.forceflow.be/2013/10/07/morton-encodingdecoding-through-bit-interleaving-implementations/
+- https://fgiesen.wordpress.com/2009/12/13/decoding-morton-codes/
+- https://en.wikipedia.org/wiki/Moser%E2%80%93de_Bruijn_sequence
+
+## Use Sphere Bound
+
+`use_sphere_bound`: if true, transform grid coordinates to a sphere positioned at `[0, 0, 0]` of radius `1` before passing to the MLP.

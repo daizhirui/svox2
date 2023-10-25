@@ -265,7 +265,7 @@ with open(path.join(args.train_dir, 'args.json'), 'w') as f:
 torch.manual_seed(20200823)
 np.random.seed(20200823)
 
-factor = 1
+factor = 1   # input image scaling factor
 dset = datasets[args.dataset_type](
                args.data_dir,
                split="train",
@@ -332,7 +332,7 @@ grid.requires_grad_(True)
 config_util.setup_render_opts(grid.opt, args)
 print('Render options', grid.opt)
 
-gstep_id_base = 0
+gstep_id_base = 0  # batches counter
 
 resample_cameras = [
         svox2.Camera(c2w.to(device=device),
