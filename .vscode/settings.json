@@ -1,0 +1,9 @@
+{
+    "ros.distro": "noetic",
+    "cmake.sourceDirectory": "${workspaceFolder}/svox2/csrc",
+    "cmake.buildDirectory": "${workspaceFolder}/svox2/csrc/build",
+    "cmake.configureSettings": {
+        "Torch_DIR": "/home/daizhirui/.conda/envs/plenoxel/lib/python3.8/site-packages/torch/share/cmake/Torch"
+    },
+    "C_Cpp.default.configurationProvider": "vector-of-bool.cmake-tools",
+}
