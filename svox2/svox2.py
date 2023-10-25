@@ -360,8 +360,8 @@ class SparseGrid(nn.Module):
         basis_type: int = BASIS_TYPE_SH,
         basis_dim: int = 9,  # SH/learned basis size; in SH case, square number
         basis_reso: int = 16,  # Learned basis resolution (x^3 embedding grid)
-        use_z_order : bool=False,  # TODO: what is this?
-        use_sphere_bound : bool=False,  # TODO: what is this?
+        use_z_order : bool=False,
+        use_sphere_bound : bool=False,
         mlp_posenc_size : int = 0,
         mlp_width : int = 16,
         background_nlayers : int = 0,  # BG MSI layers
@@ -1090,7 +1090,7 @@ class SparseGrid(nn.Module):
         :param randomize: bool, whether to enable randomness
         :param beta_loss: float, weighting for beta loss to add to the gradient.
                                  (fused into the backward pass).
-                                 This is average voer the rays in the batch.
+                                 This is average over the rays in the batch.
                                  Beta loss also from neural volumes:
                                  [Lombardi et al., ToG 2019]
         :return: (N, 3), predicted RGB

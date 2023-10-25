@@ -299,3 +299,30 @@ background_reso = 512
 ## Use Sphere Bound
 
 `use_sphere_bound`: if true, transform grid coordinates to a sphere positioned at `[0, 0, 0]` of radius `1` before passing to the MLP.
+
+## Grid Coefficients
+
+- `density_data`: a scalar opacity value for each grid cell
+- `sh_data`: a vector of spherical harmonics coefficients for each grid cell
+- `basis_data`: used when `basis_type` is `3D_TEXTURE` or `MLP`
+- `background_data`: used when learning foreground and background separately
+
+## Where to compute Spherical Harmonics Coefficients, Volume Weights
+
+Look at `svox2/csrc/render_lerp_kernel_cuvol.cu`
+
+## Loss terms
+
+- `beta_loss`: [Neural Volumes](https://dl.acm.org/doi/pdf/10.1145/3306346.3323020)
+- `total variation regularization`: https://ieeexplore.ieee.org/document/413269
+
+## Statistics
+
+- `mse_loss`: [NeRF](https://arxiv.org/pdf/2003.08934.pdf)
+- `psnr`: [NeRF](https://arxiv.org/pdf/2003.08934.pdf)
+
+## Essential Techniques
+
+- interpolation
+- coarse-to-fine: train at coarse resolution first, then subdivide the grid via trilinear interpolation and train at finer resolution
+- voxel-pruning: prune voxels of weight below a threshold, and use dilation operation so that a voxel is only pruned if both itself and its neighbors are deemed unoccupied
