@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+numpy = "*"
+imageio = "*"
+imageio-ffmpeg = "*"
+ipdb = "*"
+opencv-python = "*"
+Pillow = "*"
+pyyaml = "*"
+pymcubes = "*"
+moviepy = "*"
+matplotlib = "*"
+scipy = "*"
+torch = "*"
+torchvision = "*"
+tqdm = "*"
+

@@ -43,7 +43,13 @@ https://github.com/Kai-46/ARF-svox2
 
 **Windows is not officially supported, and we have only tested with Linux. Adding support would be welcome.**
 
-First create the virtualenv; we recommend using conda:
+First create the virtualenv; we recommend using ~~conda~~ pipenv:
+```sh
+pipenv shell
+pipenv update --verbose
+```
+
+You can still use the old conda environment if you prefer:
 ```sh
 conda env create -f environment.yml
 conda activate plenoxel

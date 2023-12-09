@@ -35,9 +35,9 @@ else:
 
 build_type = os.environ.get("BUILD_TYPE", "Release")
 if build_type == "Debug":
-    extra_compile_args={'cxx': ['-g'], 'nvcc': ['-O2', '-rdc=true']},
+    extra_compile_args={'cxx': ['-g'], 'nvcc': ['-O2', '-rdc=true']}
 else:
-    extra_compile_args={'cxx': ['-O3'], 'nvcc': ['-O3', '-rdc=true']},
+    extra_compile_args={'cxx': ['-O3'], 'nvcc': ['-O3', '-rdc=true']}
 
 try:
     ext_modules = [

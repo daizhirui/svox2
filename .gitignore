@@ -8,3 +8,4 @@ ckpt/
 .eggs
 build
 *.cpython*.so
+Pipfile.lock

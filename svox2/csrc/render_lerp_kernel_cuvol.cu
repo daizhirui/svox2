@@ -9,7 +9,7 @@
 #include <tuple>
 
 namespace {
-const int WARP_SIZE = 32;
+const int WARP_SIZE = 32;   // number of threads in a warp (block)
 
 const int TRACE_RAY_CUDA_THREADS = 128;
 const int TRACE_RAY_CUDA_RAYS_PER_BLOCK = TRACE_RAY_CUDA_THREADS / WARP_SIZE;
